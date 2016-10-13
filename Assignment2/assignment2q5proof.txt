@@ -1,0 +1,32 @@
+Alexander Chatron-Michaud
+260611509
+COMP 302
+This work is mine and mine alone.
+
+let rec insert n lst =
+  match lst with
+  | [] -> [n]
+  | x :: xs -> if (n < x) then n:: lst else x::(insert n xs)
+
+let rec isort lst =
+  match lst with
+  | [] -> []
+  | x :: xs -> insert x (isort xs)
+
+Statement that insert is correct:
+For an algorithm to be correct, the algorithm must satisfy correctness, completeness, and termination. The insert method works for a list of any size as it terminates when given an empty list and reduces the size of the list by one element each time in the recursive step, so the problem continually moves towards the terminating step and always reaches it. The algorithm is correct as it places n before the remainder of the list it has yet to recurse on when n is less than the remaining terms in the list (this assumes that the list is sorted from low to high). It is complete because it terminates only when n has been inserted and will at worst still complete if n is not inserted until the end of the list in the case that it is larger than the other terms.
+
+Proof for isort:
+
+Base case: An empty list is trivially sorted. In the case that x::xs is a list with one element we insert the single element into an empty list, and a list with one element is also trivially sorted.
+
+Inductive hypothesis: We assume that isort works for any list of size n. We want to show that it will also work for any list of size |l| = n+1
+	l = [X0, X1, ... , Xn], |l| = n+1
+	isort l = insert X0 (isort [X1,...,Xn])
+	Inductive step: because [X1,...,Xn] is of size n, we assume isort returns the correctly sorted array
+	=> isort l = insert X0 (Sorted list of size n)
+	Since we know that insert works correctly, X0 will be inserted to the list in a way such that the output list is still sorted
+	=> isort l returns a correctly sorted list of size n+1
+
+Therefore, by principle of inductive reasoning, the algorithm isort works for any finite list of size n, where n is an natural number.
+
